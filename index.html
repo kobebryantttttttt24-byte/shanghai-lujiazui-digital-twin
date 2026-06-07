@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Shanghai Lujiazui Digital Twin</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cesium@1.125.0/Build/Cesium/Widgets/widgets.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    html, body, #cesiumContainer { margin:0; padding:0; width:100%; height:100%; overflow:hidden; background:#000; font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif; }
+    #errorBanner { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(200,40,40,0.9); color:#fff; padding:16px 24px; border-radius:8px; font-size:14px; z-index:99999; white-space:pre-wrap; max-width:80%; }
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <div id="errorBanner"></div>
+  
+  <!-- Loading Screen -->
+  <div id="loadingScreen">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <div class="loading-title">Shanghai Lujiazui</div>
+      <div class="loading-subtitle">Digital Twin &middot; Loading Photorealistic 3D Tiles</div>
+      <div class="loading-progress">
+        <div class="loading-bar"><div class="loading-bar-fill" id="loadingBarFill"></div></div>
+        <div class="loading-percent" id="loadingPercent">0%</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- UI overlay -->
+  <div id="topBar" class="glass-panel">
+    <div class="topbar-left"><div class="app-title">Shanghai Lujiazui Digital Twin</div></div>
+    <div class="topbar-right">
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="searchInput" placeholder="Search buildings..." autocomplete="off" />
+        <div id="searchResults" class="search-dropdown glass-panel"></div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="coordsDisplay" class="glass-panel">
+    <div class="coord-item"><span class="coord-label">Lat</span><span class="coord-value" id="coordLat">31.2397&deg;N</span></div>
+    <div class="coord-divider"></div>
+    <div class="coord-item"><span class="coord-label">Lon</span><span class="coord-value" id="coordLon">121.4998&deg;E</span></div>
+    <div class="coord-divider"></div>
+    <div class="coord-item"><span class="coord-label">Alt</span><span class="coord-value" id="coordAlt">2.0 km</span></div>
+  </div>
+  
+  <div id="todToggle" class="glass-panel">
+    <button class="tod-btn active" data-tod="day" title="Daytime">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+    </button>
+    <button class="tod-btn" data-tod="dusk" title="Dusk">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 18a5 5 0 0 0-10 0"/><path d="M12 2v7"/><path d="M4.22 10.22l1.42 1.42"/><path d="M1 18h2"/><path d="M21 18h2"/><path d="M18.36 11.64l1.42-1.42"/><path d="M23 22H1"/><path d="M16 4l-4 4-4-4"/></svg>
+    </button>
+    <button class="tod-btn" data-tod="night" title="Night">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+  
+  <div id="buildingInfoCard" class="glass-panel info-card">
+    <button id="closeInfoCard" class="close-btn" title="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="info-card-content">
+      <h2 id="infoName" class="info-name"></h2>
+      <div class="info-stats">
+        <div class="info-stat"><span class="info-stat-label">Height</span><span class="info-stat-value" id="infoHeight"></span></div>
+        <div class="info-stat"><span class="info-stat-label">Completed</span><span class="info-stat-value" id="infoYear"></span></div>
+      </div>
+      <p class="info-desc" id="infoDesc"></p>
+    </div>
+  </div>
+  
+  <!-- Only CesiumJS from CDN - no Three.js -->
+  <script src="https://cdn.jsdelivr.net/npm/cesium@1.125.0/Build/Cesium/Cesium.js"></script>
+  
+  <!-- Single combined JS file to avoid load-order issues -->
+  <script src="js/app.js"></script>
+</body>
+</html>
