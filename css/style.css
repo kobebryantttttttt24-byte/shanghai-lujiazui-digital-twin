@@ -1,0 +1,203 @@
+/* ===== Shanghai Lujiazui Digital Twin - Styles ===== */
+
+/* ----- Glassmorphism Base ----- */
+.glass-panel {
+  background: rgba(15, 20, 30, 0.55);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  color: rgba(255, 255, 255, 0.9);
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+/* ----- Loading Screen ----- */
+#loadingScreen {
+  position: fixed; inset: 0; z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(ellipse at center, #0a1628 0%, #020810 100%);
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#loadingScreen.hidden {
+  opacity: 0; visibility: hidden; pointer-events: none;
+}
+.loading-content {
+  text-align: center;
+}
+.loading-spinner {
+  width: 48px; height: 48px;
+  margin: 0 auto 24px;
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: #4da6ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-title {
+  font-size: 28px; font-weight: 600; letter-spacing: 0.02em;
+  color: #fff; margin-bottom: 8px;
+}
+.loading-subtitle {
+  font-size: 13px; color: rgba(255,255,255,0.5);
+  letter-spacing: 0.05em; margin-bottom: 32px;
+}
+.loading-progress {
+  display: flex; align-items: center; gap: 12px;
+  justify-content: center;
+}
+.loading-bar {
+  width: 200px; height: 3px;
+  background: rgba(255,255,255,0.1); border-radius: 3px;
+  overflow: hidden;
+}
+.loading-bar-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, #4da6ff, #00d4aa);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+.loading-percent {
+  font-size: 12px; color: rgba(255,255,255,0.5);
+  min-width: 36px; text-align: right;
+}
+
+/* ----- Top Bar ----- */
+#topBar {
+  position: fixed; top: 16px; left: 16px; right: 16px;
+  z-index: 100; height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px;
+}
+.app-title {
+  font-size: 15px; font-weight: 600; letter-spacing: 0.03em;
+  color: #fff;
+}
+.search-box {
+  position: relative; display: flex; align-items: center;
+}
+.search-icon {
+  position: absolute; left: 12px;
+  width: 16px; height: 16px; color: rgba(255,255,255,0.4);
+  pointer-events: none;
+}
+#searchInput {
+  width: 220px; height: 34px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 0 12px 0 36px;
+  font-size: 13px; color: #fff; outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+#searchInput::placeholder { color: rgba(255,255,255,0.35); }
+#searchInput:focus {
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.12);
+}
+.search-dropdown {
+  position: absolute; top: 42px; right: 0;
+  width: 260px; max-height: 280px; overflow-y: auto;
+  display: none; z-index: 110;
+  padding: 4px;
+}
+.search-dropdown.visible { display: block; }
+.search-result-item {
+  padding: 10px 12px; border-radius: 8px;
+  cursor: pointer; transition: background 0.15s ease;
+  font-size: 13px; color: rgba(255,255,255,0.8);
+}
+.search-result-item:hover {
+  background: rgba(255,255,255,0.1);
+}
+.search-result-item .result-name { font-weight: 500; }
+.search-result-item .result-sub { font-size: 11px; color: rgba(255,255,255,0.4); }
+
+/* ----- Coordinates Display ----- */
+#coordsDisplay {
+  position: fixed; bottom: 24px; left: 24px;
+  z-index: 100;
+  display: flex; align-items: center; gap: 0;
+  padding: 10px 16px; font-size: 12px;
+}
+.coord-item { display: flex; flex-direction: column; align-items: center; padding: 0 10px; }
+.coord-label { font-size: 10px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.05em; }
+.coord-value { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.85); font-variant-numeric: tabular-nums; }
+.coord-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.1); }
+
+/* ----- Time-of-Day Toggle ----- */
+#todToggle {
+  position: fixed; bottom: 24px; right: 24px;
+  z-index: 100;
+  display: flex; gap: 4px; padding: 6px;
+}
+.tod-btn {
+  width: 38px; height: 38px;
+  background: transparent; border: none;
+  border-radius: 8px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.45);
+  transition: all 0.3s ease;
+}
+.tod-btn svg { width: 18px; height: 18px; }
+.tod-btn:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); }
+.tod-btn.active { background: rgba(255,255,255,0.15); color: #fff; }
+
+/* ----- Building Info Card ----- */
+#buildingInfoCard {
+  position: fixed; top: 50%; right: 24px;
+  transform: translateY(-50%);
+  z-index: 200;
+  width: 320px; padding: 24px;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease, transform 0.35s ease;
+  transform: translateY(-50%) translateX(20px);
+}
+#buildingInfoCard.visible {
+  opacity: 1; visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+.close-btn {
+  position: absolute; top: 12px; right: 12px;
+  width: 28px; height: 28px;
+  background: rgba(255,255,255,0.06); border: none;
+  border-radius: 6px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.5);
+  transition: all 0.2s ease;
+}
+.close-btn svg { width: 14px; height: 14px; }
+.close-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+.info-name { font-size: 22px; font-weight: 600; margin: 0 0 16px; color: #fff; }
+.info-stats { display: flex; gap: 24px; margin-bottom: 16px; }
+.info-stat { display: flex; flex-direction: column; gap: 2px; }
+.info-stat-label { font-size: 10px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.05em; }
+.info-stat-value { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.9); }
+.info-desc { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.65); margin: 0; }
+
+/* ----- Transition Overlay ----- */
+#transitionOverlay {
+  position: fixed; inset: 0; z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+#transitionOverlay.active { opacity: 1; }
+
+/* ----- Cesium credit override ----- */
+.cesium-widget-credits { display: none !important; }
+
+/* ----- Mobile Responsive ----- */
+@media (max-width: 768px) {
+  .app-title { display: none; }
+  #searchInput { width: 160px; font-size: 12px; }
+  #topBar { padding: 0 12px; }
+  #buildingInfoCard {
+    right: 8px; width: calc(100vw - 32px); max-width: 320px;
+  }
+  .info-name { font-size: 18px; }
+  #coordsDisplay { bottom: 16px; left: 8px; padding: 8px 12px; }
+  .coord-item { padding: 0 6px; }
+  .coord-value { font-size: 11px; }
+  #todToggle { bottom: 16px; right: 8px; }
+}
